@@ -1,11 +1,11 @@
 import {saveBlob} from '@/utils/BytesConverter';
 import {uid} from 'uid';
-import {computed, ref, onMounted} from 'vue';
+import {computed, ref} from 'vue';
 import {useTaskStore, useFileStore} from '@/store';
 export default function useFileArea(task) {
   const taskStore = useTaskStore();
   const fileStore = useFileStore();
-  const files = computed(() => task.documents.map((doc) => getContent(doc)));
+  const files = computed(() => taskStore.tasks.find((t) => t.id === task.id).documents.map((doc) => getContent(doc)));
   const selectedFile = ref(null);
   function addFiles(event) {
     if (!event.target.files) return;

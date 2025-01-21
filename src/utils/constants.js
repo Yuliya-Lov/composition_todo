@@ -4,6 +4,5 @@ export const defaultTask = {
   isDone: false,
   index: 0,
   createdAt: new Date(),
-  doneAt: null,
   documents: [],
 };

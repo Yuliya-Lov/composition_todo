@@ -136,7 +136,7 @@ onMounted(() => {
     position: absolute;
     padding: 3px;
     border-radius: 5px;
-    background: rgba(0, 0, 0, 0.4);
+    background: styles.$overlay;
     top: 5px;
     min-width: 20px;
     height: 20px;
@@ -160,8 +160,8 @@ onMounted(() => {
     position: fixed;
     backdrop-filter: blur(4px);
     padding: 5px;
-    background-color: rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: styles.$lightOverlay;
+    box-shadow: 0 0 10px 0 styles.$lightOverlay;
     top: 0px;
     left: 0px;
     width: 100%;

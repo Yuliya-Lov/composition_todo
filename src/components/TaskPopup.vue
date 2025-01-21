@@ -35,7 +35,7 @@ const onClosePopup = () => emit('closePopup');
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: styles.$overlay;
   z-index: 100;
 }
 .task-popup {
