@@ -1,0 +1,24 @@
+@use './variables.scss' as variables;
+
+@mixin flex($flexDir, $justify, $align: center) {
+  width: 100%;
+  display: flex;
+  flex-direction: $flexDir;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin mainText($size, $weight: 400, $lineHeight: normal) {
+  font-family: variables.$montserrat;
+  font-size: $size;
+  font-style: normal;
+  font-weight: $weight;
+  line-height: $lineHeight;
+}
+@mixin garamondText($size, $weight: 700, $lineHeight: normal) {
+  font-family: variables.$garamond;
+  font-size: $size;
+  font-style: normal;
+  font-weight: $weight;
+  line-height: $lineHeight;
+}

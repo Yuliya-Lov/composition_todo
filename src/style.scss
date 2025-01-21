@@ -1,0 +1,56 @@
+@use 'scss/fonts.css';
+@use 'scss/variables.scss' as variables;
+@use 'scss/mixins.scss' as mix;
+
+:root {
+  font-family: Montserrat, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: rgb(83, 121, 9);
+  background: variables.$mainGradient;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  @include mix.flex(column, flex-start);
+  min-width: 320px;
+  min-height: 100vh;
+}
+button {
+  cursor: pointer;
+  border: none;
+}
+input {
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+#app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  @include mix.flex(column, center);
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  padding: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(128 128 128 / 24%);
+  height: 80%;
+  padding: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: variables.$grey;
+  border-radius: 20px;
+}
