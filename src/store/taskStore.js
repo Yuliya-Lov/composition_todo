@@ -28,7 +28,7 @@ export const useTaskStore = defineStore('tasks', () => {
   }
   function isRelevantTask(task) {
     const isSearchString = searchString.value
-      ? task.title.toLowerCase().includes(searchString.value.toLowerCase())
+      ? task.title?.toLowerCase().includes(searchString.value?.toLowerCase())
       : true;
     return isDoneExcludes.value ? task.isDone === false && isSearchString : isSearchString;
   }

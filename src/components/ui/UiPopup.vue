@@ -7,6 +7,7 @@
     </div>
   </Teleport>
 </template>
+
 <script setup>
 import {defineProps, defineEmits} from 'vue';
 const emit = defineEmits(['closePopup']);
@@ -15,6 +16,7 @@ const {isOpen} = defineProps({
 });
 const onClosePopup = () => emit('closePopup');
 </script>
+
 <style lang="scss" scoped>
 @use '@/scss' as styles;
 .popup {

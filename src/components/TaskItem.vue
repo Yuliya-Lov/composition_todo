@@ -1,12 +1,25 @@
 <script setup>
-import {Popup, FileArea} from '@/components/ui';
+import {UiPopup, UiFileArea} from '@/components/ui';
 import {defineProps} from 'vue';
 import {useTaskItem} from '@/composables';
+import {useTaskStore, useFileStore} from '@/store';
+const taskStore = useTaskStore();
+const fileStore = useFileStore();
 const {task} = defineProps({
   task: Object,
 });
 const {openTaskPopup, closeTaskPopup, toggleCompleteTask, deleteTask, isTaskPopupOpen, taskTitle, debounceTaskTitle} =
   useTaskItem(task);
+function addFiles(files) {
+  files.forEach((file) => {
+    fileStore.addFile(file);
+    taskStore.addTaskFile(task, file.id);
+  });
+}
+function deleteFile(fileId) {
+  taskStore.removeTaskFile(task.id, fileId);
+  fileStore.removeFile(fileId);
+}
 </script>
 
 <template>
@@ -37,14 +50,19 @@ const {openTaskPopup, closeTaskPopup, toggleCompleteTask, deleteTask, isTaskPopu
           area-label="Удалить задачу"
         ></button>
       </div>
-      <popup :isOpen="isTaskPopupOpen" @closePopup="closeTaskPopup">
+      <UiPopup :isOpen="isTaskPopupOpen" @closePopup="closeTaskPopup">
         <template #content>
           <div class="popup__wrapper">
             <h2 class="task_text" :class="{task_text_done: task.isDone}">{{ task.title }}</h2>
-            <FileArea :task="task" />
+            <UiFileArea
+              :task-files="task.documents"
+              :is-disabled="task.isDone"
+              @addFiles="addFiles"
+              @deleteFile="deleteFile"
+            />
           </div>
         </template>
-      </popup>
+      </UiPopup>
     </article>
   </Transition>
 </template>

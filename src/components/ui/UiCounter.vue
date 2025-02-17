@@ -1,3 +1,11 @@
+<template>
+  <div class="counter">
+    <p class="counter_text">
+      {{ label }}: <span>{{ count }}</span>
+    </p>
+  </div>
+</template>
+
 <script setup>
 import {defineProps} from 'vue';
 const props = defineProps({
@@ -11,14 +19,6 @@ const props = defineProps({
   },
 });
 </script>
-
-<template>
-  <div class="counter">
-    <p class="counter_text">
-      {{ label }}: <span>{{ count }}</span>
-    </p>
-  </div>
-</template>
 
 <style scoped lang="scss">
 @use '@/scss' as styles;

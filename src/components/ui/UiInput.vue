@@ -1,19 +1,36 @@
-<script setup>
-import {useTaskInput} from '@/composables';
-const {text, addNewTask} = useTaskInput();
-</script>
-
 <template>
-  <form class="form">
-    <input type="text" class="form_input" placeholder="Добавить задачу" v-model="text" />
-    <button class="form_button" type="submit" area-label="Добавить задачу" @click="addNewTask">
+  <form class="form" @submit.prevent="addNewTask">
+    <input type="text" class="form_input" :placeholder="placeholder" v-model.trim="model" />
+    <button class="form_button" type="submit" :area-label="placeholder">
       <span class="form_button-icon">+</span>
     </button>
   </form>
 </template>
 
+<script setup>
+import {defineEmits, ref} from 'vue';
+const props = defineProps({
+  modelValue: {
+    type: String,
+    default: '',
+  },
+  placeholder: {
+    type: String,
+    default: 'Добавить',
+  },
+});
+const model = ref(props.modelValue);
+const emit = defineEmits(['update:modelValue']);
+function addNewTask() {
+  if (model.value) {
+    emit('update:modelValue', model.value);
+    model.value = '';
+  }
+}
+</script>
+
 <style scoped lang="scss">
-@use '../scss' as styles;
+@use '@/scss' as styles;
 .form {
   @include styles.flex(row, center);
   background: white;
@@ -31,7 +48,6 @@ const {text, addNewTask} = useTaskInput();
 
     &::placeholder {
       color: styles.$green;
-      //@include styles.mainText(24px);
     }
   }
 

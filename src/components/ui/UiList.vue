@@ -1,25 +1,33 @@
-<script setup>
-import TaskItem from './TaskItem.vue';
-import {useTaskList} from '@/composables';
-const {tasks} = useTaskList();
-</script>
-
 <template>
-  <section class="task-list" area-label="Список задач">
-    <article class="task-list__empty" v-if="tasks.length === 0">
-      <p>Список задач пуст</p>
+  <section class="list" area-label="Список">
+    <article class="list__empty" v-if="list.length === 0">
+      <p>{{ emptyText }}</p>
     </article>
-    <ul v-if="tasks.length">
-      <li v-for="task in tasks" :key="task.id">
-        <TaskItem :task="task" />
+    <ul v-if="list.length">
+      <li v-for="item in list" :key="item.id">
+        <slot name="item" :item="item" />
       </li>
     </ul>
   </section>
 </template>
 
+<script setup>
+import {defineProps} from 'vue';
+const props = defineProps({
+  list: {
+    type: Array,
+    default: [],
+  },
+  emptyText: {
+    type: String,
+    default: 'Список  пуст',
+  },
+});
+</script>
+
 <style scoped lang="scss">
-@use '../scss' as styles;
-.task-list {
+@use '@/scss' as styles;
+.list {
   @include styles.flex(column, flex-start);
   margin: 20px 0;
   max-height: 55vh;

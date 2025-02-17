@@ -1,3 +1,11 @@
+<template>
+  <div class="switcher">
+    <input class="switcher_input" type="checkbox" id="switch" :checked="isChecked" @change="onSwitch" />
+    <label class="switcher_label" for="switch"></label>
+    <p class="switcher_text">{{ label }}</p>
+  </div>
+</template>
+
 <script setup>
 import {defineProps, defineEmits} from 'vue';
 const props = defineProps({
@@ -11,16 +19,8 @@ const props = defineProps({
   },
 });
 const emit = defineEmits(['switch']);
-const onSwitch = () => emit('switch');
+const onSwitch = () => emit('switch', !props.isChecked);
 </script>
-
-<template>
-  <div class="switcher">
-    <input class="switcher_input" type="checkbox" id="switch" :checked="isChecked" @change="onSwitch" />
-    <label class="switcher_label" for="switch"></label>
-    <p class="switcher_text">{{ label }}</p>
-  </div>
-</template>
 
 <style scoped lang="scss">
 @use '@/scss' as styles;

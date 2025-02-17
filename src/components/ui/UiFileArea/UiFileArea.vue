@@ -4,21 +4,14 @@
       <div v-if="files" v-for="file in files" class="files-area__file" @click="openImg(file)">
         <img class="files-area__img" :src="getImageUrl(file)" />
         <p class="files-area__name">{{ file.name }}</p>
-        <button v-if="!task.isDone" type="button" class="files-area__button delete" @click.stop="deleteFile(file.id)" />
+        <button v-if="!isDisabled" type="button" class="files-area__button delete" @click.stop="deleteFile(file.id)" />
         <button type="button" class="files-area__button save" @click.stop="saveFile(file)" />
       </div>
-      <input
-        type="file"
-        class="files-area__input"
-        multiple
-        @change="addFiles"
-        ref="fileInput"
-        :disabled="task.isDone"
-      />
+      <input type="file" class="files-area__input" multiple @change="addFiles" ref="fileInput" :disabled="isDisabled" />
       <span v-if="!files.length" class="files-area__text"
-        >{{ task.isDone ? 'нет файлов' : 'можешь добавить сюда файлы' }}
+        >{{ isDisabled ? 'нет файлов' : 'можешь добавить сюда файлы' }}
       </span>
-      <span v-if="files.length && !task.isDone" class="files-area__text plus">+</span>
+      <span v-if="files.length && !isDisabled" class="files-area__text plus">+</span>
       <div v-if="selectedFile">
         <Teleport to="body">
           <div class="files-area__open-img" @click="closeImg">
@@ -31,14 +24,41 @@
 </template>
 
 <script setup>
-import {defineProps, ref, onMounted} from 'vue';
-import {useFileArea} from '@/composables';
-const {task} = defineProps(['task']);
-const {files, saveFile, selectedFile, addFiles, deleteFile, getImageUrl, openImg, closeImg} = useFileArea(task);
-const fileInput = ref(null);
+import {uid} from 'uid';
+import {defineProps, computed, defineEmits, useTemplateRef, onMounted} from 'vue';
+import useFileArea from './useFileArea';
+import {useFileStore} from '@/store';
+const fileStore = useFileStore();
+const {taskFiles, isDisabled} = defineProps({
+  taskFiles: {
+    type: Array,
+    default: [],
+  },
+  isDisabled: {
+    type: Boolean,
+    default: true,
+  },
+});
+const emits = defineEmits(['deleteFile', 'addFiles']);
+const {saveFile, selectedFile, getImageUrl, openImg, closeImg} = useFileArea();
+const files = computed(() => taskFiles.map((doc) => fileStore.files.find((f) => f.id === doc)));
+const fileInput = useTemplateRef('fileInput');
 onMounted(() => {
   fileInput.value.focus();
 });
+function addFiles(event) {
+  if (!event.target.files) return;
+  const files = Array.from(event.target.files).map((file) => ({
+    id: uid(),
+    content: file,
+    name: file.name,
+    type: file.type,
+  }));
+  emits('addFiles', files);
+}
+function deleteFile(fileId) {
+  emits('deleteFile', fileId);
+}
 </script>
 
 <style lang="scss" scoped>

@@ -15,5 +15,6 @@ import Header from './components/Header.vue';
 .content {
   @include styles.flex(column, flex-start, stretch);
   max-width: 900px;
+  gap: 20px;
 }
 </style>

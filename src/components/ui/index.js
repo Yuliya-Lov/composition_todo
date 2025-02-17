@@ -1,7 +1,9 @@
-import Popup from './Popup.vue';
-import Counter from './Counter.vue';
-import Switcher from './Switcher.vue';
-import FileArea from './FileArea.vue';
-import Filter from './Filter.vue';
+import UiPopup from './UiPopup.vue';
+import UiCounter from './UiCounter.vue';
+import UiSwitcher from './UiSwitcher.vue';
+import UiFileArea from './UiFileArea/UiFileArea.vue';
+import UiFilter from './UiFilter.vue';
+import UiList from './UiList.vue';
+import UiInput from './UiInput.vue';
 
-export {Popup, Counter, Switcher, FileArea, Filter};
+export {UiPopup, UiCounter, UiSwitcher, UiFileArea, UiFilter, UiList, UiInput};
